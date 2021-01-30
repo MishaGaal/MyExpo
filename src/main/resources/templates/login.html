@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <title>Welcome!</title>
+    <link media="screen" rel="stylesheet" th:href="@{css/style.css}" type="text/css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container bg-light">
+<header th:insert="blocks/header :: header"></header>
+<div class="container" id="wrapper">
+    <h1 class="text-dark" th:text="#{expo}"></h1>
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <form id="signin" method="post" th:action="@{/login}">
+        <div><input name="username" placeholder="username" type="text"/></div>
+        <div><input name="password" placeholder="password" type="password"/></div>
+        <button type="submit">&#xf0da;</button>
+    </form>
+    <p>No account yet?<a th:href="@{/registration}">click here</a></p>
+</div>
+</body>
+</html>

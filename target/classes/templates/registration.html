@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Welcome</title>
+    <link th:href="@{css/style.css}" rel="stylesheet" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container bg-light">
+<header th:insert="blocks/header :: header"></header>
+<div class="container" id="wrapper">
+    <h1 class="text-dark" th:text="#{REGISTRATION}"></h1>
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <form id="signin" th:action="@{/registration}" th:object="${user}" method="post" autocomplete="off">
+        <div><input type="text" name="username" placeholder="username" th:value="${user.username}"/></div>
+        <div><input type="text" name="email" placeholder="email" th:value="${user.email}"/></div>
+        <div><input type="password" name="password" placeholder="password" th:value="${user.password}"/></div>
+        <div><input type="password" name="passwordConf" placeholder="password" th:value="${user.passwordConf}"/></div>
+        <div th:if="${errorMessage}">
+            <p th:text="${errorMessage}"/>
+        </div>
+        <button type="submit">&#xf0da;</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+<div class="py-5 container my-10">
+<div class="card-columns">
+        <ul th:each="user : ${users}">
+            <div class="card text-center my-3">
+                <div class="m-2">
+                <h5 class="card-title">[[${user.username}]]</h5>
+                    <p class="card-text">[[${user.email}]]</p>
+                    <p class="card-text">[[${user.roles}]]</p>
+                    <p class="card-text">[[${user.userTickets}]]</p>
+                </div>
+                 <a th:href="@{/user/{id}(id=${user.id})}"class="btn btn-primary">edit</a>
+            </div>
+        </ul>
+</div>
+</div>
+<footer th:insert="blocks/footer :: footer"></footer>
+</body>
+</html>

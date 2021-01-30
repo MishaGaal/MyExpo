@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Stat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+ <div class="card-group py-5">
+        <ul th:each="ticket : ${tickets}">
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5 class="card-title">[[${ticket.id}]]</h5>
+                    <p class="card-text">[[${ticket.expo.title}]]</p>
+                    <p class="card-text">[[${ticket.ticketUsers}]]</p>
+                </div>
+            </div>
+        </ul>
+ </div>
+
+<footer th:insert="blocks/footer :: footer"></footer>
+</body>
+</html>

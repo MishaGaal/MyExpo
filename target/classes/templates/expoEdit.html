@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Expo editor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container-fluid bg-light">
+<header th:insert="blocks/header :: header"></header>
+<div class="container mt-5">
+    <h1>Edit Expo</h1>
+    <form th:action="@{/expo/edit/{id}(id=${id})}" th:object="${expo}"  method="post">
+        <div><label>Capture: </label><input type="text" th:name="imgName" th:value="${expo.imgName}"/></div>
+        <div><label>Title eng: </label><input type="text" th:name="title" th:value="${expo.title}"/></div>
+        <div><label>Title ua: </label><input type="text" th:name="title_ua" th:value="${expo.title_ua}"/></div>
+        <div><label>Desc eng: </label></div><textarea type="text" th:name="description" th:text="${expo.description}"></textarea>
+        <div><label>Desc ua: </label></div><textarea type="text" th:name="description_ua" th:text="${expo.description_ua}"></textarea>
+        <div><label>Start date: </label><input type="date" th:name="startDate" th:value="${expo.startDate}"/></div>
+        <div><label>End date: </label><input type="date" th:name="endDate" th:value="${expo.endDate}"/></div>
+        <div><label>Amount: </label><input type="number" th:name="amount" th:value="${expo.amount}"/></div>
+        <div><label>Price: </label><input type="number" th:name="ticket_price" th:value="${expo.ticket_price}"/></div>
+        <input type="hidden" name="id" th:value="${id}">
+        <ul  th:each="hole : ${holles}">
+            <input type="checkbox" th:name="${hole}"  th:field="${expo.holles}" th:value="${hole}" th:checked="${#lists.contains(expo.holles, hole)}"  th:text="${hole}">
+        </ul>
+        <p><input class="btn btn-success" type="submit" th:value="#{edit}"/></p>
+    </form>
+</div>
+<footer th:insert="blocks/footer :: footer"></footer>
+</body>
+</html>

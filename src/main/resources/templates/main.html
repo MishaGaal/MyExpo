@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+
+>
+<head>
+    <title>MYEXPO</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container-fluid bg-light">
+<header th:insert="blocks/header :: header"></header>
+<expos th:insert="blocks/expos :: expos"></expos>
+<pager th:insert="blocks/pager::pager"></pager>
+<footer th:insert="blocks/footer :: footer"></footer>
+</body>
+</html>

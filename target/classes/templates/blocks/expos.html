@@ -1,0 +1,32 @@
+<div th:fragment ="expos">
+
+    <div class="album mt-5 bg-light justify-content-between">
+    <div class="container">
+       <filter th:insert="blocks/filter :: filter"></filter>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+            <ul th:each="expo : ${expos}">
+                <div class="card shadow-sm">
+                    <img class="card-img-top" width="300" height="225" th:src="@{~/images/{name}(name=${expo.imgName})}" alt="Card image cap" >
+                    <div class="card-img-overlay ">
+                      <span class="d-inline p-2 bg-dark text-white font-weight-bold">[[${#locale.toString()}=='ua'?${expo.titleUa}:${expo.title}]]</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">[[${expo.startDate}]] - [[${expo.endDate}]]</h5>
+                        <p class="card-text">[[${#locale.toString()}=='ua'?${expo.descriptionUa}:${expo.description}]]</p>
+                        <h5 class="card-title">[[${#locale.toString()}=='ua'?${expo.ticketPrice*30}:${expo.ticketPrice}]]</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a th:href="@{/ticket/{id}/{user}/buy(id=${expo.id}, user=${#authentication.getPrincipal().getId()})}"  type="button" class="btn btn-sm btn-outline-secondary" th:if="${#authorization.expression('hasAuthority(''USER'')')}">Buy</a>
+                                <a th:href="@{/expo/edit/{id}(id=${expo.id})}" class="btn btn-sm btn-outline-secondary" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">Edit</a>
+                            </div>
+                            <small class="text-muted">[[${expo.amount}]] left</small>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+    </div>
+
+</div>
+

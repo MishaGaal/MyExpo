@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <title>Welcome</title>
+    <link media="screen" rel="stylesheet" th:href="@{css/style.css}" type="text/css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container bg-light">
+<header th:insert="blocks/header :: header"></header>
+<div class="container" id="wrapper">
+    <h1 class="text-dark" th:text="#{REGISTRATION}"></h1>
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <form autocomplete="off" id="signin" method="post" th:action="@{/registration}" th:object="${user}">
+        <div><input name="username" placeholder="username" th:value="${user.username}" type="text"/></div>
+        <div><input name="email" placeholder="email" th:value="${user.email}" type="text"/></div>
+        <div><input name="password" placeholder="password" th:value="${user.password}" type="password"/></div>
+        <div><input name="passwordConf" placeholder="password" th:value="${user.passwordConf}" type="password"/></div>
+        <div th:if="${errorMessage}">
+            <p th:text="${errorMessage}"/>
+        </div>
+        <button type="submit">&#xf0da;</button>
+    </form>
+</div>
+</body>
+</html>

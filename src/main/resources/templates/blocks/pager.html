@@ -1,0 +1,21 @@
+<div th:fragment="pager">
+    <div th:if="${expos!=null and expos.getTotalPages()>1}">
+        <div class="container">
+            <ul class="pagination py-5 ml-4">
+                <li class="page-item ">
+                    <a class="page-link  border-secondary text-muted" tabindex="-1"
+                       th:href="@{''(page=0)}">[[#{start}]]</a>
+                </li>
+                <tr th:each="i : ${#numbers.sequence(1,expos.getTotalPages()-1)}">
+                    <li class="page-item">
+                        <a class="page-link border-secondary text-muted" tabindex="-1" th:href="@{''(page=${i})}">[[${i}]]</a>
+                    </li>
+                </tr>
+                <li class="page-item">
+                    <a class="page-link  border-secondary text-muted" tabindex="-1"
+                       th:href="@{''(page=${expos.getTotalPages()-1})}">[[#{end}]]</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
