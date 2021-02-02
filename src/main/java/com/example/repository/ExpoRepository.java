@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 
@@ -21,7 +21,7 @@ public interface ExpoRepository extends CrudRepository<Expo, Integer> {
 
     Optional<Page<Expo>> findByExhibitedTrueAndDescriptionOrDescriptionUaContaining(String theme, String themeUa, Pageable pageable);
 
-    Optional<Page<Expo>> findByExhibitedTrueAndStartDateBetween(Date startDate, Date endDate, Pageable pageable);
+    Optional<Page<Expo>> findByExhibitedTrueAndStartDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable);
 
 
 }

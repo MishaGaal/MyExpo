@@ -5,7 +5,9 @@ import com.example.dto.ExpoDTO;
 import com.example.entity.Expo;
 import com.example.entity.Holle;
 import com.example.exception.ExpoException;
+import com.example.exception.ValidationException;
 import com.example.service.ExpoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/expo")
 @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -36,7 +38,7 @@ public class ExpoController {
         try {
             model.addAttribute("expos", expoService.getAllExpos(pageable));
         } catch (ExpoException e) {
-            System.err.println("Can't get expos!");
+            log.info("{}", "Cant find all expos: " + e.getMessage());
         }
         return "expo";
     }
@@ -49,11 +51,12 @@ public class ExpoController {
     }
 
     @PostMapping("/add")
-    public String userSubmit(@Valid ExpoDTO expoDTO, BindingResult bindingResult, Model model) {
+    public String expoSubmit(@Valid ExpoDTO expoDTO, BindingResult bindingResult, Model model) {
         try {
-            expoService.addNewExpo(expoDTO, bindingResult);
-        } catch (ExpoException e) {
-            System.err.println("Can't add new expo");
+            ControllerUtils.validateMessage(bindingResult);
+            expoService.addNewExpo(expoDTO);
+        } catch (ValidationException e) {
+            log.info("{}", "Validation Exception: " + e.getMessage());
             model.addAttribute("expo", expoDTO);
             model.addAttribute("errorMessage", e.getMessage());
             return "addExpo";
@@ -69,17 +72,19 @@ public class ExpoController {
             model.addAttribute("expo", expoService.createDTO(id));
             model.addAttribute("holles", Holle.values());
         } catch (Exception e) {
-            System.err.println("Can't create expo: " + e.getMessage());
+            log.info("{}", "Cant find expo: " + e.getMessage());
         }
         return "expoEdit";
     }
 
     @PostMapping("/edit/{expo}")
-    public String expoSubmit(@RequestParam("id") Integer id, @Valid ExpoDTO expoDTO, BindingResult bindingResult) {
+    public String expoSubmit(@RequestParam("id") Integer id, @Valid ExpoDTO expoDTO, BindingResult bindingResult, Model model) {
         try {
-            expoService.expoSubmit(id, expoDTO, bindingResult);
-        } catch (ExpoException e) {
-            System.err.println("Can't edit expo: " + e.getMessage());
+            ControllerUtils.validateMessage(bindingResult);
+            expoService.expoSubmit(id, expoDTO);
+        } catch (ValidationException e) {
+            log.info("{}", "Validation Exception: " + e.getMessage());
+            model.addAttribute("expo", expoDTO);
         }
         return "redirect:/expo";
     }
@@ -89,7 +94,7 @@ public class ExpoController {
         try {
             expoService.deleteExpo(expo);
         } catch (ExpoException e) {
-            System.err.println("Can't delete expo");
+            log.info("{}", "Cant delete expo: " + e.getMessage());
         }
         return "redirect:/expo";
     }

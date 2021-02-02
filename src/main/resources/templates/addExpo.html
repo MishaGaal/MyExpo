@@ -16,8 +16,10 @@
         <textarea name="description" th:value="${expo.description}" type="text"></textarea>
         <div><label>Desc ua: </label></div>
         <textarea name="description_ua" th:value="${expo.description_ua}" type="text"></textarea>
-        <div><label>Start date: </label><input name="startDate" th:value="${expo.startDate}" type="date"/></div>
-        <div><label>End date: </label><input name="endDate" th:value="${expo.endDate}" type="date"/></div>
+        <div><label>Start date: </label><input name="startDate" th:field="${expo.startDate}"
+                                               th:value="${expo.startDate}" type="date"/></div>
+        <div><label>End date: </label><input name="endDate" th:field="${expo.endDate}" th:value="${expo.endDate}"
+                                             type="date"/></div>
         <div><label>Amount: </label><input name="amount" th:value="${expo.amount}" type="number"/></div>
         <div><label>Price: </label><input name="ticket_price" th:value="${expo.ticket_price}" type="number"/></div>
         <ul th:each="hole : ${holles}">

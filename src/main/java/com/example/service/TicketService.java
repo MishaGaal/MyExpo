@@ -4,6 +4,7 @@ import com.example.entity.Expo;
 import com.example.entity.Ticket;
 import com.example.entity.User;
 import com.example.exception.ExpoException;
+import com.example.exception.UserException;
 import com.example.repository.ExpoRepository;
 import com.example.repository.TicketRepository;
 import com.example.repository.UserRepository;
@@ -32,31 +33,30 @@ public class TicketService {
     TicketRepository ticketRepository;
 
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ExpoException.class, SQLException.class})
-    public Expo buyTicket(Integer id, Integer userId) throws ExpoException {
-        Expo expo = expoRepository.findById(id).orElseThrow(ExpoException::new);
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ExpoException.class, SQLException.class, UserException.class})
+    public Expo buyTicket(Integer id, Integer userId) throws ExpoException, UserException {
+        Expo expo = expoRepository.findById(id).orElseThrow(() -> new ExpoException("Cant find  expo by Id"));  // multiple purchase
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException("Cant find user by Id"));
         if (expo.getAmount() == 0) {
-            throw new ExpoException("No more tickets left");
+            throw new ExpoException("No more tickets left"); //rem
         }
         expo.setAmount(expo.getAmount() - 1);
+        expo.getUsers().add(user);
         expo = expoRepository.save(expo);
-        User user = userRepository.findById(userId).orElseThrow(ExpoException::new);
-        Ticket ticket = new Ticket(expo);
+       /* Ticket ticket = new Ticket(expo);
         ticket.setBought(true);
         ticket = ticketRepository.save(ticket);
-        user.getUserTickets().add(ticket);
-        user = userRepository.save(user);
-        if (expo == null || user == null || ticket == null) {
-            throw new ExpoException("Transaction failed!");
-        }
+        user.getUserTickets().add(ticket);*/
+        user.getTickets().add(expo);
+        userRepository.save(user);
         return expo;
     }
 
-    public Page<Ticket> getUserTickets(Integer id) throws ExpoException {
-        return new PageImpl<>(new ArrayList<>(userRepository.findById(id).orElseThrow(ExpoException::new).getUserTickets()));
+    public Page<Ticket> getUserTickets(Integer id) throws UserException {
+        return new PageImpl<>(new ArrayList<>(userRepository.findById(id).orElseThrow(() -> new UserException("Cant find user by Id")).getUserTickets()));
     }
 
     public Page<Ticket> getViewStat(Pageable pageable) throws ExpoException {
-        return ticketRepository.findByBoughtTrueOrderByTicketUsers(pageable).orElseThrow(ExpoException::new);
+        return ticketRepository.findByBoughtTrueOrderByTicketUsers(pageable).orElseThrow(() -> new ExpoException("No tickets have been bought"));
     }
 }

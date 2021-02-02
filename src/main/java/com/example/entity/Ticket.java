@@ -1,9 +1,18 @@
 package com.example.entity;
 
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 
 @Entity
 public class Ticket {
@@ -25,44 +34,8 @@ public class Ticket {
     private Set<User> ticketUsers = new HashSet<>();
 
 
-    public Ticket() {
-    }
-
     public Ticket(Expo expo) {
         this.expo = expo;
-    }
-
-
-    public Expo getExpo() {
-        return expo;
-    }
-
-    public void setExpo(Expo expo) {
-        this.expo = expo;
-    }
-
-    public boolean isBought() {
-        return bought;
-    }
-
-    public void setBought(boolean bought) {
-        this.bought = bought;
-    }
-
-    public Set<User> getTicketUsers() {
-        return ticketUsers;
-    }
-
-    public void setTicketUsers(Set<User> ticketUsers) {
-        this.ticketUsers = ticketUsers;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     @Override

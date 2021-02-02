@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Expos</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container-fluid bg-light">
 <header th:insert="blocks/header :: header"></header>
 <div class="py-5 container my-10">
     <div class="d-flex justify-content-center">
-        <a th:href="@{/expo/add}"class="btn btn-success btn-lg">[[#{add}]]</a>
-        <a th:href="@{/ticket/stat}"class="btn btn-warning btn-lg">[[#{stat}]]</a>
+        <a class="btn btn-success btn-lg" th:href="@{/expo/add}">[[#{add}]]</a>
+        <a class="btn btn-warning btn-lg" th:href="@{/ticket/stat}">[[#{stat}]]</a>
     </div>
     <div class="card-columns">
         <ul th:each="expo : ${expos}">
             <div class="card text-center my-3">
-                <img class="card-img-top" width="300" height="225" th:src="@{~/images/{name}(name=${expo.imgName})}" alt="Card image cap" >
+                <img alt="Card image cap" class="card-img-top" height="225"
+                     th:src="@{~/images/{name}(name=${expo.imgName})}" width="300">
                 <div class="m-2">
                     <h5 class="card-title">[[${expo.title}]]</h5>
                     <h5 class="card-title">[[${expo.titleUa}]]</h5>
@@ -27,8 +28,8 @@
                     <p class="card-text">[[${expo.amount}]]</p>
                     <p class="card-text">[[${expo.exhibited}]]</p>
                 </div>
-                <a th:href="@{/expo/edit/{id}(id=${expo.id})}"class="btn btn-primary">[[#{edit}]]</a>
-                <a th:href="@{/expo/delete/{id}(id=${expo.id})}"class="btn btn-danger">[[#{delete}]]</a>
+                <a class="btn btn-primary" th:href="@{/expo/edit/{id}(id=${expo.id})}">[[#{edit}]]</a>
+                <a class="btn btn-danger" th:href="@{/expo/delete/{id}(id=${expo.id})}">[[#{delete}]]</a>
             </div>
         </ul>
     </div>

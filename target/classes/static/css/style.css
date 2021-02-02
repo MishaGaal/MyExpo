@@ -1,20 +1,23 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css');
 
-*{
+* {
     font-family: 'Open Sans', 'sans-serif', 'FontAwesome';
 }
-body{
+
+body {
     background: rgb(52, 56, 61);
     padding: 80px;
 }
-h1{
+
+h1 {
     color: rgb(255, 255, 255);
     margin: 20px auto 0;
     width: 200px;
     text-align: center;
 }
-#wrapper{
+
+#wrapper {
     position: absolute;
     width: 320px;
     left: 50%;
@@ -30,6 +33,7 @@ h1{
     border-radius: 8px;
     position: relative;
 }
+
 #signin::before {
     display: block;
     position: relative;
@@ -40,20 +44,24 @@ h1{
     margin-left: 20px;
     z-index: 1;
 }
-#signin input:first-of-type{
+
+#signin input:first-of-type {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
 }
-#signin input:last-of-type{
+
+#signin input:last-of-type {
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
 }
-#signin  input[type="text"], #signin  input[type="password"], #signin button[type="submit"]{
+
+#signin input[type="text"], #signin input[type="password"], #signin button[type="submit"] {
     background: rgb(28, 30, 33);
     box-shadow: inset -100px -100px 0 rgb(28, 30, 33); /*Prevent yellow autofill color*/
     color: rgb(255, 255, 255);
 }
-#signin input[type="text"], #signin  input[type="password"]{
+
+#signin input[type="text"], #signin input[type="password"] {
     position: relative;
     display: block;
     width: 280px;
@@ -64,10 +72,12 @@ h1{
     padding: 0 0 0 20px;
     font-weight: 700;
 }
-#signin  input[type="text"]:focus, #signin  input[type="password"]:focus{
+
+#signin input[type="text"]:focus, #signin input[type="password"]:focus {
     color: rgb(255, 255, 255);
 }
-#signin button[type="submit"]{
+
+#signin button[type="submit"] {
     display: block;
     position: absolute;
     width: 52px;
@@ -85,11 +95,13 @@ h1{
     padding-bottom: 3px;
     text-align: center;
 }
-#signin button[type="submit"]:hover{
+
+#signin button[type="submit"]:hover {
     color: rgb(0, 165, 27);
     text-shadow: 0 0 10px rgb(0, 165, 27);
     cursor: pointer;
 }
+
 #signin p {
     color: rgb(79, 85, 97);
     padding: 0 20px;
@@ -97,10 +109,12 @@ h1{
     font-size: 12px;
     margin: 5px 0 0 0;
 }
-#signin p > a{
+
+#signin p > a {
     color: rgb(111, 119, 135);
     text-decoration: none;
 }
-#signin p > a:hover{
+
+#signin p > a:hover {
     border-bottom: 1px solid;
 }

@@ -1,17 +1,20 @@
 package com.example.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
+
+
+@Slf4j
 @ControllerAdvice
 public class UserExceptionHandler {
 
-    HttpStatus bad = HttpStatus.BAD_REQUEST;
 
-    @ExceptionHandler
-    public ResponseEntity handleUserException(UserException e) {
-        return new ResponseEntity(e, bad);
+    @ExceptionHandler(value = Exception.class)
+    public String handleUserException(HttpServletRequest req, Exception e) {
+        log.error("URL Request failed " + req.getRequestURL() + ": " + e.getMessage() + ": " + e.getCause());
+        return "error";
     }
 }

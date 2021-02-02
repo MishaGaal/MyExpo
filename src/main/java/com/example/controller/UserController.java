@@ -5,13 +5,14 @@ import com.example.dto.UserDTO;
 import com.example.entity.Role;
 import com.example.exception.UserException;
 import com.example.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/user")
 @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -30,7 +31,7 @@ public class UserController {
         try {
             model.addAttribute("users", userService.getAllUsers().getUsers());
         } catch (UserException e) {
-            System.err.println("Cant get all users");
+            log.info("{}", "Cant get all users: " + e.getMessage());
         }
         return "all";
     }
@@ -43,7 +44,7 @@ public class UserController {
             model.addAttribute("user", userService.createDTO(id));
             model.addAttribute("roles", Role.values());
         } catch (UserException e) {
-            System.err.println("Cant find user info");
+            log.info("{}", "Cant find user info: " + e.getMessage());
         }
         return "userEdit";
     }
@@ -53,7 +54,7 @@ public class UserController {
         try {
             userService.userSubmit(id, userDTO);
         } catch (UserException e) {
-            System.err.println("Cant edit user");
+            log.info("{}", "Cant edit user: " + e.getMessage());
         }
         return "redirect:/user";
     }
