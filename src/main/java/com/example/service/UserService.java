@@ -38,25 +38,15 @@ public class UserService implements UserDetailsService {
     }
 
     public UsersDTO getAllUsers() throws UserException {
-        List<User> users = (List<User>) userRepository.findAll();
-        if (users == null) {
-            throw new UserException("No users found");
-        }
-        return new UsersDTO(users);
+        return new UsersDTO((List<User>) userRepository.findAll());
     }
 
 
-    public User userSubmit(Integer id, UserDTO userDTO) throws UserException {
-        try {
-            return userRepository.save(User.configureUser(id, userDTO));
-        } catch (Exception e) {
-            throw new UserException("Update is invalid");
-        }
-
+    public User userSubmit(Integer id, UserDTO userDTO) {
+        return userRepository.save(User.configureUser(id, userDTO));
     }
 
     public User registerNewUser(UserDTO userDTO) throws UserException {
-        try {
             return userRepository.save(User.builder()
                     .username(userDTO.getUsername())
                     // .password(passwordEncoder.encode(userDTO.getPassword()));// Easy for development will be changed on release;
@@ -65,10 +55,7 @@ public class UserService implements UserDetailsService {
                     .roles(Collections.singleton(Role.USER))
                     .active(true)
                     .build());
-        } catch (Exception e) {
-            log.info("{}", "Cant register user: " + e.getMessage());
-            throw new UserException("User already exists");
-        }
+
     }
 
     public User findById(Integer id) throws UserException {

@@ -8,16 +8,14 @@ import com.example.exception.UserException;
 import com.example.repository.ExpoRepository;
 import com.example.repository.TicketRepository;
 import com.example.repository.UserRepository;
+import com.example.util.StatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -33,30 +31,19 @@ public class TicketService {
     TicketRepository ticketRepository;
 
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ExpoException.class, SQLException.class, UserException.class})
-    public Expo buyTicket(Integer id, Integer userId) throws ExpoException, UserException {
-        Expo expo = expoRepository.findById(id).orElseThrow(() -> new ExpoException("Cant find  expo by Id"));  // multiple purchase
+    @Transactional
+    public Ticket buyTicket(Integer id, Integer userId) throws ExpoException, UserException {
+        Expo expo = expoRepository.findById(id).orElseThrow(() -> new ExpoException("Cant find expo by Id"));
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException("Cant find user by Id"));
-        if (expo.getAmount() == 0) {
-            throw new ExpoException("No more tickets left"); //rem
-        }
-        expo.setAmount(expo.getAmount() - 1);
-        expo.getUsers().add(user);
-        expo = expoRepository.save(expo);
-       /* Ticket ticket = new Ticket(expo);
-        ticket.setBought(true);
-        ticket = ticketRepository.save(ticket);
-        user.getUserTickets().add(ticket);*/
-        user.getTickets().add(expo);
-        userRepository.save(user);
-        return expo;
+        return ticketRepository.save(new Ticket(expo, user));
     }
 
-    public Page<Ticket> getUserTickets(Integer id) throws UserException {
-        return new PageImpl<>(new ArrayList<>(userRepository.findById(id).orElseThrow(() -> new UserException("Cant find user by Id")).getUserTickets()));
+
+    public List<Ticket> getUserTickets(User user) throws UserException {
+        return ticketRepository.findAllByUser(user).orElseThrow(() -> new UserException("No tickets for this user"));
     }
 
-    public Page<Ticket> getViewStat(Pageable pageable) throws ExpoException {
-        return ticketRepository.findByBoughtTrueOrderByTicketUsers(pageable).orElseThrow(() -> new ExpoException("No tickets have been bought"));
+    public Page<StatUtils> getViewStat(Pageable pageable) throws ExpoException {
+        return ticketRepository.countAllByOrderByExpo(pageable).orElseThrow(() -> new ExpoException("No tickets have been bought"));
     }
 }

@@ -51,11 +51,7 @@ public class UserController {
 
     @PostMapping
     public String userSubmit(@RequestParam("id") Integer id, UserDTO userDTO) {
-        try {
             userService.userSubmit(id, userDTO);
-        } catch (UserException e) {
-            log.info("{}", "Cant edit user: " + e.getMessage());
-        }
         return "redirect:/user";
     }
 

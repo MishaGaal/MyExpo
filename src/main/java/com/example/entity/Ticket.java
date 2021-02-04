@@ -1,11 +1,11 @@
 package com.example.entity;
 
 
+import com.example.exception.ExpoException;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 
 @Getter
@@ -17,7 +17,6 @@ import java.util.Set;
 @Entity
 public class Ticket {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -27,19 +26,23 @@ public class Ticket {
     private Expo expo;
 
 
-    private boolean bought = false;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-
-    @ManyToMany(mappedBy = "userTickets")
-    private Set<User> ticketUsers = new HashSet<>();
-
-
-    public Ticket(Expo expo) {
+    public Ticket(Expo expo, User user) throws ExpoException {
+        if (expo.getAmount() == 0) {
+            throw new ExpoException("No more tickets left");
+        }
+        expo.setAmount(expo.getAmount() - 1);
         this.expo = expo;
+        this.user = user;
     }
 
     @Override
     public String toString() {
         return id.toString();
     }
+
+
 }

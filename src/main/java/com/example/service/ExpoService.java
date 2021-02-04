@@ -48,7 +48,7 @@ public class ExpoService {
 
 
     public Expo expoSubmit(Integer id, ExpoDTO expoDTO) {
-        return expoRepository.save(Expo.buildExpo(id, expoDTO));
+        return expoRepository.save(Expo.buildAndConfigureExpo(id, expoDTO));
 
     }
 
@@ -63,25 +63,30 @@ public class ExpoService {
 
 
     public ExpoDTO createDTO(Integer id) throws ExpoException {
-        Expo expo = expoRepository
-                .findById(id)
-                .orElseThrow(() -> new ExpoException("Can't find by id expo"));
-        return new ExpoDTO(expo);
+        return
+                new ExpoDTO(
+                        expoRepository
+                                .findById(id)
+                                .orElseThrow(() -> new ExpoException("Can't find by id expo")));
     }
 
 
     public Page<Expo> findByExhibitedTrueOrderByPriceDesc(Pageable pageable) throws ExpoException {
-        return new ExposDTO(expoRepository
-                .findByExhibitedTrueOrderByTicketPriceDesc(pageable)
-                .orElseThrow(() -> new ExpoException("No expos or none exhibited")))
-                .getExpos();
+        return
+                new ExposDTO(
+                        expoRepository
+                                .findByExhibitedTrueOrderByTicketPriceDesc(pageable)
+                                .orElseThrow(() -> new ExpoException("No expos or none exhibited")))
+                        .getExpos();
     }
 
     public Page<Expo> findByExhibitedTrueOrderByPriceAsc(Pageable pageable) throws ExpoException {
-        return new ExposDTO(expoRepository
-                .findByExhibitedTrueOrderByTicketPriceAsc(pageable)
-                .orElseThrow(() -> new ExpoException("No expos or none exhibited")))
-                .getExpos();
+        return
+                new ExposDTO(
+                        expoRepository
+                                .findByExhibitedTrueOrderByTicketPriceAsc(pageable)
+                                .orElseThrow(() -> new ExpoException("No expos or none exhibited")))
+                        .getExpos();
     }
 
     public Page<Expo> filterTheme(String theme, Pageable pageable) throws ExpoException {
@@ -90,7 +95,7 @@ public class ExpoService {
                 new ExposDTO(
                         expoRepository
                                 .findByExhibitedTrueAndDescriptionOrDescriptionUaContaining(theme, theme, pageable)
-                                .orElseThrow(() -> new ExpoException("No expos or none exhibited or containing: " + theme)))
+                                .orElseThrow(() -> new ExpoException("No expos or none exhibited containing: " + theme)))
                         .getExpos();
     }
 
@@ -99,7 +104,7 @@ public class ExpoService {
                 new ExposDTO(
                         expoRepository
                                 .findByExhibitedTrueAndStartDateBetween(startDate, endDate, pageable)
-                                .orElseThrow(() -> new ExpoException("No expos or none exhibited or between dates: " + startDate + ", " + endDate)))
+                                .orElseThrow(() -> new ExpoException("No expos or none exhibited between dates: " + startDate + " - " + endDate)))
                         .getExpos();
     }
 

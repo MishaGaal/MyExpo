@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -37,21 +36,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-
-    @ManyToMany
-    @JoinTable(
-            name = "users_tickets",
-            joinColumns = @JoinColumn(name = "ticket_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<Ticket> userTickets = new HashSet<>();
-
-
-    @ManyToMany
-    @JoinTable(
-            name = "users_expos",
-            joinColumns = @JoinColumn(name = "expo_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<Expo> tickets;
 
 
     public static User configureUser(Integer id, UserDTO userDTO) { //private
@@ -92,4 +76,8 @@ public class User implements UserDetails {
         return getRoles();
     }
 
+    @Override
+    public String toString() {
+        return username;
+    }
 }

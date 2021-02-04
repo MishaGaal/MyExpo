@@ -42,11 +42,8 @@ public class Expo {
     private Set<Holle> holles;
 
 
-    @ManyToMany(mappedBy = "userTickets")
-    private Set<User> users;
 
-
-    public static Expo buildExpo(Integer id, ExpoDTO expoDTO) {
+    public static Expo buildAndConfigureExpo(Integer id, ExpoDTO expoDTO) {
         Expo expo = Expo.builder()
                 .id(id)
                 .imgName(expoDTO.getImgName())

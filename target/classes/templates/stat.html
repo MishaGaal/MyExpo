@@ -11,9 +11,7 @@
     <ul th:each="ticket : ${tickets}">
         <div class="card my-3">
             <div class="card-body">
-                <h5 class="card-title">[[${ticket.id}]]</h5>
-                <p class="card-text">[[${ticket.expo.title}]]</p>
-                <p class="card-text">[[${ticket.ticketUsers}]]</p>
+                <p class="card-text">[[${ticket.ticket.expo.title}]] sold:  <h5 class="card-title">[[${ticket.count}]]</h5> tickets</p>
             </div>
         </div>
     </ul>

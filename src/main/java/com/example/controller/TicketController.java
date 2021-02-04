@@ -36,18 +36,13 @@ public class TicketController {
     @GetMapping
     public String getTickets(@AuthenticationPrincipal User user, Model model) {
         try {
-            model.addAttribute("tickets", ticketService.getUserTickets(user.getId()));
+            model.addAttribute("tickets", ticketService.getUserTickets(user));
         } catch (UserException e) {
             log.info("{}", "Cant get all users: " + e.getMessage());
         }
         return "ticket";
     }
 
-    @GetMapping("test")
-    public String getTestTickets(@AuthenticationPrincipal User user, Model model) throws UserException {
-        model.addAttribute("expos", userService.findById(user.getId()).getTickets());
-        return "manyToManyTest";
-    }
 
 
     @GetMapping("stat")

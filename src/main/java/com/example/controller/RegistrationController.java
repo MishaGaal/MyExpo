@@ -5,6 +5,7 @@ import com.example.dto.UserDTO;
 import com.example.exception.UserException;
 import com.example.exception.ValidationException;
 import com.example.service.UserService;
+import com.example.util.ControllerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class RegistrationController {
             ControllerUtils.validateMessage(bindingResult, userDTO);
             userService.registerNewUser(userDTO);
         } catch (UserException | ValidationException e) {
-            log.info("{}", "User registration failed: " + e.getMessage());
+            log.info("{}", "User already exists");
             model.addAttribute("user", userDTO);
             model.addAttribute("errorMessage", e.getMessage());
             return "registration";
