@@ -6,11 +6,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 @Slf4j
 @ControllerAdvice
-public class UserExceptionHandler {
-
+public class GeneralExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public String handleUserException(HttpServletRequest req, Exception e) {

@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).get();
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("No such user"));
     }
 
     public UsersDTO getAllUsers() throws UserException {
@@ -49,8 +49,7 @@ public class UserService implements UserDetailsService {
     public User registerNewUser(UserDTO userDTO) throws UserException {
             return userRepository.save(User.builder()
                     .username(userDTO.getUsername())
-                    // .password(passwordEncoder.encode(userDTO.getPassword()));// Easy for development will be changed on release;
-                    .password(userDTO.getPassword())
+                    .password(passwordEncoder.encode(userDTO.getPassword()))
                     .email(userDTO.getEmail())
                     .roles(Collections.singleton(Role.USER))
                     .active(true)

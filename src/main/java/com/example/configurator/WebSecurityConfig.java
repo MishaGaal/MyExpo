@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -50,8 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
-        //.passwordEncoder(passwordEncoder);  // Easy for development will be changed on release
+                .passwordEncoder(passwordEncoder);  // Easy for development release : .passwordEncoder(NoOpPasswordEncoder.getInstance());
 
     }
 }

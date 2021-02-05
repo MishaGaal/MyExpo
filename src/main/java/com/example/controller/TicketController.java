@@ -63,6 +63,6 @@ public class TicketController {
             log.info("{}", "Cant buy ticket: " + e.getMessage());
             return "redirect:/main";
         }
-        return "redirect:/main";
+        return "redirect:/ticket";
     }
 }
