@@ -31,7 +31,7 @@ public class Ticket {
     private User user;
 
     public Ticket(Expo expo, User user) throws ExpoException {
-        if (expo.getAmount() == 0) {
+        if (expo.getAmount() == 0 || !expo.isExhibited()) {
             throw new ExpoException("No more tickets left");
         }
         expo.setAmount(expo.getAmount() - 1);
