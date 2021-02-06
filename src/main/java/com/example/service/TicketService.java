@@ -1,6 +1,5 @@
 package com.example.service;
 
-import com.example.entity.Expo;
 import com.example.entity.Ticket;
 import com.example.entity.User;
 import com.example.exception.ExpoException;
@@ -32,10 +31,14 @@ public class TicketService {
 
 
     @Transactional
-    public Ticket buyTicket(Integer id, Integer userId) throws ExpoException, UserException {
-        Expo expo = expoRepository.findById(id).orElseThrow(() -> new ExpoException("Cant find expo by Id"));
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserException("Cant find user by Id"));
-        return ticketRepository.save(new Ticket(expo, user));
+    public Ticket buyTicket(Integer id, User user) throws ExpoException {
+        return ticketRepository
+                .save(
+                        new Ticket(
+                                expoRepository
+                                        .findById(id)
+                                        .orElseThrow(() -> new ExpoException("Cant find expo by Id"))
+                                , user));
     }
 
 

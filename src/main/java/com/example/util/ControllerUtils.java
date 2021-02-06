@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ControllerUtils {
 
@@ -16,7 +15,7 @@ public class ControllerUtils {
             List<FieldError> errors = bindingResult.getFieldErrors();
             throw new ValidationException(errors.get(0).getDefaultMessage());
         }
-        if (Objects.equals(userDTO.getPassword(), userDTO.getPasswordConf())) {
+        if (!userDTO.getPassword().equals(userDTO.getPasswordConf())) {
             throw new ValidationException("Passwords are different!");
         }
     }

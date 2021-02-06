@@ -39,7 +39,7 @@ public class RegistrationController {
             ControllerUtils.validateMessage(bindingResult, userDTO);
             userService.registerNewUser(userDTO);
         } catch (UserException | ValidationException e) {
-            log.info("{}", "User already exists");
+            log.info("{}", "User can't register");
             model.addAttribute("user", userDTO);
             model.addAttribute("errorMessage", e.getMessage());
             return "registration";

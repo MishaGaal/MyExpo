@@ -44,7 +44,6 @@ public class TicketController {
     }
 
 
-
     @GetMapping("stat")
     public String getAllUsers(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         try {
@@ -55,11 +54,11 @@ public class TicketController {
         return "stat";
     }
 
-    @GetMapping("{expo}/{user}/buy")
-    public String expoBuy(@PathVariable(value = "expo") Integer id, @PathVariable(value = "user") Integer userId) {
+    @GetMapping("{expo}/buy")
+    public String expoBuy(@PathVariable(value = "expo") Integer id, @AuthenticationPrincipal User user) {
         try {
-            ticketService.buyTicket(id, userId);
-        } catch (UserException | ExpoException e) {
+            ticketService.buyTicket(id, user);
+        } catch (ExpoException e) {
             log.info("{}", "Cant buy ticket: " + e.getMessage());
             return "redirect:/main";
         }

@@ -20,7 +20,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-outline-secondary"
-                                       th:href="@{/ticket/{id}/{user}/buy(id=${expo.id}, user=${#authentication.getPrincipal().getId()})}"
+                                       th:href="@{/ticket/{id}/buy(id=${expo.id})}"
                                        th:if="${#authorization.expression('hasAuthority(''USER'')')}"
                                        type="button">Buy</a>
                                     <a class="btn btn-sm btn-outline-secondary"

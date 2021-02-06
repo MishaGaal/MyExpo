@@ -38,20 +38,18 @@ public class TicketServiceTest {
 
 
     @Test(expected = ExpoException.class)
-    public void buyTicketRollback() throws ExpoException, UserException {
-        Mockito.doReturn(Optional.of(new User())).when(userRepository).findById(2);
+    public void buyTicketRollback() throws ExpoException {
         Mockito.doReturn(Optional.of(new Expo())).when(expoRepository).findById(1);
-        ticketService.buyTicket(1, 2);
+        ticketService.buyTicket(1, new User());
         Mockito.verify(ticketRepository, Mockito.times(1)).save(ArgumentMatchers.any());
     }
 
     @Test
-    public void buyTicket() throws ExpoException, UserException {
+    public void buyTicket() throws ExpoException {
         Expo expo = new Expo();
         expo.setAmount(7);
-        Mockito.doReturn(Optional.of(new User())).when(userRepository).findById(2);
         Mockito.doReturn(Optional.of(expo)).when(expoRepository).findById(1);
-        ticketService.buyTicket(1, 2);
+        ticketService.buyTicket(1, new User());
         Mockito.verify(ticketRepository, Mockito.times(1)).save(ArgumentMatchers.any());
     }
 
