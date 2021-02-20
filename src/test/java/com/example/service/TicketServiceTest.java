@@ -48,7 +48,8 @@ public class TicketServiceTest {
     public void buyTicket() throws ExpoException {
         Expo expo = new Expo();
         expo.setAmount(7);
-        Mockito.doReturn(Optional.of(expo)).when(expoRepository).findById(1);
+        expo.setExhibited(true);
+        Mockito.doReturn(Optional.of(expo)).when(expoRepository).findByIdAndExhibitedTrueAndAmountGreaterThan(1, 1);
         ticketService.buyTicket(1, new User());
         Mockito.verify(ticketRepository, Mockito.times(1)).save(ArgumentMatchers.any());
     }
