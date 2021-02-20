@@ -14,7 +14,7 @@ import java.util.Optional;
 
 
 public interface TicketRepository extends CrudRepository<Ticket, Integer> {
-    Optional<Page<Ticket>> findAllByOrderByExpo(Pageable pageable);
+
 
     @Query("SELECT new com.example.util.StatUtils(COUNT(t.expo), t) FROM Ticket AS t GROUP BY t.expo ORDER BY COUNT(t.expo) DESC")
     Optional<Page<StatUtils>> countAllByOrderByExpo(Pageable pageable);

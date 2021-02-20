@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class FilterController {
         this.expoService = expoService;
     }
 
+
     @GetMapping
     public String createFilter() {
         return "main";
@@ -47,6 +49,7 @@ public class FilterController {
     public String ascDesc(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.ASC, value = 6) Pageable pageable) {
         try {
             model.addAttribute("expos", expoService.findByExhibitedTrueOrderByPriceAsc(pageable));
+            System.out.println("here");
         } catch (Exception e) {
             log.info("{}", "Cant find by asc price expos: " + e.getMessage());
         }
@@ -67,8 +70,11 @@ public class FilterController {
 
     @PostMapping("dates")
     public String filterSubmit(Model model,
-                               @RequestParam(defaultValue = "#{T(java.time.LocalDate).now()}") LocalDate startDate,
-                               @RequestParam(defaultValue = "#{T(java.time.LocalDate).now()}") LocalDate endDate,
+
+                               @RequestParam(defaultValue = "#{T(java.time.LocalDate).now()}")
+                               @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+                               @RequestParam(defaultValue = "#{T(java.time.LocalDate).now()}")
+                                   @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
                                @PageableDefault(sort = "id", direction = Sort.Direction.ASC, value = 6) Pageable pageable) {
 
         try {

@@ -18,4 +18,6 @@ public interface ExpoRepository extends CrudRepository<Expo, Integer> {
     Optional<Page<Expo>> findByExhibitedTrueAndDescriptionOrDescriptionUaContaining(String theme, String themeUa, Pageable pageable);
     Optional<Page<Expo>> findByExhibitedTrueAndStartDateBetween(LocalDate startDate, LocalDate endDate, Pageable pageable);
 
+    Optional<Expo> findByIdAndExhibitedTrueAndAmountGreaterThan(Integer id, Integer amount);
+
 }

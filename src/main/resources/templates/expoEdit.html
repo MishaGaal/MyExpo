@@ -13,9 +13,9 @@
         <div><label>Title eng: </label><input th:name="title" th:value="${expo.title}" type="text"/></div>
         <div><label>Title ua: </label><input th:name="title_ua" th:value="${expo.title_ua}" type="text"/></div>
         <div><label>Desc eng: </label></div>
-        <textarea th:name="description" th:text="${expo.description}" type="text"></textarea>
+        <textarea th:name="description" type="text">[[${expo.description}]]</textarea>
         <div><label>Desc ua: </label></div>
-        <textarea th:name="description_ua" th:text="${expo.description_ua}" type="text"></textarea>
+        <textarea th:name="description_ua" type="text">[[${expo.description_ua}]]</textarea>
         <div><label>Start date: </label><input th:field="${expo.startDate}" th:name="startDate"
                                                th:value="${expo.startDate}" type="date"/></div>
         <div><label>End date: </label><input th:field="${expo.endDate}" th:name="endDate" th:value="${expo.endDate}"

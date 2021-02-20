@@ -10,12 +10,6 @@
 <header th:insert="blocks/header :: header"></header>
 <div class="container" id="wrapper">
     <h1 class="text-dark" th:text="#{REGISTRATION}"></h1>
-    <div th:if="${param.error}">
-        Invalid username and password.
-    </div>
-    <div th:if="${param.logout}">
-        You have been logged out.
-    </div>
     <form autocomplete="off" id="signin" method="post" th:action="@{/registration}" th:object="${user}">
         <div><input name="username" placeholder="username" th:value="${user.username}" type="text"/></div>
         <div><input name="email" placeholder="email" th:value="${user.email}" type="text"/></div>

@@ -1,7 +1,6 @@
 package com.example.entity;
 
 
-import com.example.exception.ExpoException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,10 +29,7 @@ public class Ticket {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Ticket(Expo expo, User user) throws ExpoException {
-        if (expo.getAmount() == 0 || !expo.isExhibited()) {
-            throw new ExpoException("No more tickets left");
-        }
+    public Ticket(Expo expo, User user) {
         expo.setAmount(expo.getAmount() - 1);
         this.expo = expo;
         this.user = user;

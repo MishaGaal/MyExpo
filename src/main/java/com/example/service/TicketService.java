@@ -9,6 +9,7 @@ import com.example.repository.TicketRepository;
 import com.example.repository.UserRepository;
 import com.example.util.StatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ public class TicketService {
     @Autowired
     TicketRepository ticketRepository;
 
+    @Value("#{new Integer('${buy.amount}')}")
+    private Integer amount;
 
     @Transactional
     public Ticket buyTicket(Integer id, User user) throws ExpoException {
@@ -36,8 +39,8 @@ public class TicketService {
                 .save(
                         new Ticket(
                                 expoRepository
-                                        .findById(id)
-                                        .orElseThrow(() -> new ExpoException("Cant find expo by Id"))
+                                        .findByIdAndExhibitedTrueAndAmountGreaterThan(id, amount)
+                                        .orElseThrow(() -> new ExpoException("Cant find available expo"))
                                 , user));
     }
 
