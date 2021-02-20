@@ -41,7 +41,7 @@ public class TicketService {
                                 expoRepository
                                         .findByIdAndExhibitedTrueAndAmountGreaterThan(id, amount)
                                         .orElseThrow(() -> new ExpoException("Cant find available expo"))
-                                , user));
+                                , user, amount));
     }
 
 

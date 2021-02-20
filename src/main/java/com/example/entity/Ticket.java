@@ -29,8 +29,8 @@ public class Ticket {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Ticket(Expo expo, User user) {
-        expo.setAmount(expo.getAmount() - 1);
+    public Ticket(Expo expo, User user, Integer amount) {
+        expo.setAmount(expo.getAmount() - amount);
         this.expo = expo;
         this.user = user;
     }
