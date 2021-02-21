@@ -49,7 +49,7 @@ public class TicketServiceTest {
         Expo expo = new Expo();
         expo.setAmount(7);
         expo.setExhibited(true);
-        Mockito.doReturn(Optional.of(expo)).when(expoRepository).findByIdAndExhibitedTrueAndAmountGreaterThan(1, 1);
+        Mockito.doReturn(Optional.of(expo)).when(expoRepository).findByIdAndExhibitedTrueAndAmountGreaterThanEqual(1, 1);
         ticketService.buyTicket(1, new User());
         Mockito.verify(ticketRepository, Mockito.times(1)).save(ArgumentMatchers.any());
     }

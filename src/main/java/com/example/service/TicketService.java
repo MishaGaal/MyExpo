@@ -39,7 +39,7 @@ public class TicketService {
                 .save(
                         new Ticket(
                                 expoRepository
-                                        .findByIdAndExhibitedTrueAndAmountGreaterThan(id, amount)
+                                        .findByIdAndExhibitedTrueAndAmountGreaterThanEqual(id, amount)
                                         .orElseThrow(() -> new ExpoException("Cant find available expo"))
                                 , user, amount));
     }
