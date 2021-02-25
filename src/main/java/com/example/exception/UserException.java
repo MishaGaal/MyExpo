@@ -5,6 +5,5 @@ public class UserException extends Exception {
         super(passwrods_different);
     }
 
-    public UserException() {
-    }
+
 }

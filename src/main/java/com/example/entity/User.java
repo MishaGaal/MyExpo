@@ -38,13 +38,15 @@ public class User implements UserDetails {
 
 
 
-    public static User configureUser(Integer id, UserDTO userDTO) { //private
+    public static User configureUser(Integer id, UserDTO userDTO) {
         User user = User.builder()
                 .id(id)
                 .username(userDTO.getUsername())
                 .roles(userDTO.getRoles())
+                .password(userDTO.getPassword())
+                .active(true)
                 .build();
-        if (userDTO.getRoles().size() == 0) {
+        if (!userDTO.getRoles().contains(Role.USER)) {
             user.setActive(false);
         }
         return user;

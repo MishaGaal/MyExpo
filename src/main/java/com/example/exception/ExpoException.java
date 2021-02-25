@@ -6,6 +6,5 @@ public class ExpoException extends Exception {
         super(message);
     }
 
-    public ExpoException() {
-    }
+
 }
